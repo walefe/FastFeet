@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  Desafio FastFeet
+  FastFeet Challenge.
 </h3>
 
 <p>Esse desafio faz parte do Desafio Final do bootcamp da Rocketseat, que é uma aplicação completa (Back-end, Front-end e Mobile).</p>
@@ -14,15 +14,24 @@
   </a>
 </p>
 
-## :rocket: Sobre o desafio
+## :rocket: About the challenge
 
-A aplicação é um app para uma transportadora fictícia, o FastFeet.
+The application is an app for a fictional carrier, FastFeet.
 
-### **Um pouco sobre as ferramentas**
+### **About the tools**
 
-- ⚡ **Express** - Framework web rápido, flexível e minimalista para Node.js;
+- ⚡ **Express** - Fast, flexible and minimalist web framework for Node.js;
 - **Sucrase** + **Nodemon**;
 - 💖 **ESLint** + **Prettier** + **EditorConfig**;
-- 💾 **Sequelize** - dialeto SQL ORM para Node.js;
+- 💾 **Sequelize** - SQL dialect ORM for Node.js;
 - :closed_lock_with_key: **JWT** - Json Web Token;
 - ⌨️ **YUP** - is a JavaScript schema builder for value parsing and validation.
+
+## Getting started
+
+_Before you run this application you need to make sure the [server](https://github.com/walefe/FastFeet) is running!_.
+
+1. Clone this repo using `https://github.com/walefe/FastFeet.git`
+2. Move to the appropriate directory: `cd gobarber`.<br />
+3. Run `yarn` to install dependencies.<br />
+4. Run `yarn start` to see the example app at `http://localhost:3333`.
