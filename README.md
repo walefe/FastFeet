@@ -27,7 +27,7 @@ The application is an app for a fictional carrier, FastFeet.
 - :closed_lock_with_key: **JWT** - Json Web Token;
 - ⌨️ **YUP** - is a JavaScript schema builder for value parsing and validation.
 
-## Getting started
+## **Getting started**
 
 _Before you run this application you need to make sure the [server](https://github.com/walefe/FastFeet) is running!_.
 
