@@ -20,8 +20,9 @@ A aplicação é um app para uma transportadora fictícia, o FastFeet.
 
 ### **Um pouco sobre as ferramentas**
 
-- Express (Framework web rápido, flexível e minimalista para Node.js);
-- Sucrase + Nodemon;
-- ESLint + Prettier + EditorConfig;
-- Sequelize (Utilize PostgreSQL ou MySQL);
-- JWT (Json Web Token);
+- ⚡ **Express** - Framework web rápido, flexível e minimalista para Node.js;
+- **Sucrase** + **Nodemon**;
+- 💖 **ESLint** + **Prettier** + **EditorConfig**;
+- 💾 **Sequelize** - dialeto SQL ORM para Node.js;
+- :closed_lock_with_key: **JWT** - Json Web Token;
+- ⌨️ **YUP** - is a JavaScript schema builder for value parsing and validation.
