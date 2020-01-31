@@ -32,6 +32,6 @@ The application is an app for a fictional carrier, FastFeet.
 _Before you run this application you need to make sure the [server](https://github.com/walefe/FastFeet) is running!_.
 
 1. Clone this repo using `https://github.com/walefe/FastFeet.git`
-2. Move to the appropriate directory: `cd gobarber`.<br />
+2. Move to the appropriate directory: `cd FastFeet`.<br />
 3. Run `yarn` to install dependencies.<br />
 4. Run `yarn start` to see the example app at `http://localhost:3333`.
