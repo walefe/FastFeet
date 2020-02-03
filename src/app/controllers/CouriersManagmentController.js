@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import Delivery from '../models/Delivery';
+import File from '../models/File';
 
 class CouriersManagmentController {
   async index(req, res) {
@@ -46,6 +47,7 @@ class CouriersManagmentController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
+      avatar_id: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -54,7 +56,14 @@ class CouriersManagmentController {
 
     const { id } = req.params;
 
-    const delivery = await Delivery.findByPk(id);
+    const delivery = await Delivery.findByPk(id, {
+      include: [
+        {
+          model: File,
+          attributes: ['id', 'name', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!delivery) {
       return res.status(401).json({ error: 'Delivery not exists.' });
@@ -66,6 +75,7 @@ class CouriersManagmentController {
       id,
       name,
       email,
+      avatar_id: delivery.File,
     });
   }
 
