@@ -2,6 +2,9 @@ import Delivery from '../models/Delivery';
 import DeliveryProblems from '../models/DeliveryProblems';
 import Order from '../models/Order';
 
+import CancellationOrder from '../jobs/CancellationOrder';
+import Queue from '../../lib/Queue';
+
 class DeliveryProblemsController {
   async index(req, res) {
     const deliveryProblems = await DeliveryProblems.findAll();
@@ -57,7 +60,10 @@ class DeliveryProblemsController {
       include: [
         {
           model: Order,
-          attributes: ['id'],
+          attributes: ['id', 'product'],
+          include: [
+            { model: Delivery, as: 'delivery', attributes: ['name', 'email'] },
+          ],
         },
       ],
     });
@@ -69,6 +75,14 @@ class DeliveryProblemsController {
     const order = await Order.findByPk(deliveryProblem.Order.id);
 
     await order.update({ canceled_at: new Date() });
+
+    const { name, email } = deliveryProblem.Order.delivery;
+
+    await Queue.add(CancellationOrder.key, {
+      name,
+      email,
+      deliveryProblem,
+    });
 
     return res.json(deliveryProblem);
   }
