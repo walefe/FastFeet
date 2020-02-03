@@ -4,6 +4,8 @@ import Recipient from '../models/Recipient';
 import Delivery from '../models/Delivery';
 import Order from '../models/Order';
 
+import Mail from '../../lib/Mail';
+
 class OrderController {
   async index(req, res) {
     const orders = await Order.findAll();
@@ -38,6 +40,7 @@ class OrderController {
 
     const recipientExists = await Recipient.findOne({
       where: { id: recipient_id },
+      attributes: ['name', 'city', 'cep'],
     });
 
     if (!recipientExists) {
@@ -45,6 +48,17 @@ class OrderController {
     }
 
     const { id, product } = await Order.create(req.body);
+
+    await Mail.sendMail({
+      to: `${deliverytExists.name} <${deliverytExists.email}>`,
+      subject: 'Nova entrega disponível.',
+      template: 'newOrder',
+      context: {
+        delivery: deliverytExists.name,
+        product,
+        recipient: recipientExists.name,
+      },
+    });
 
     return res.json({
       id,

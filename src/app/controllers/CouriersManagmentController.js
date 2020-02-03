@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 import Delivery from '../models/Delivery';
 
-class DeliveryController {
+class CouriersManagmentController {
   async index(req, res) {
     const deliveries = await Delivery.findAll();
 
@@ -84,4 +84,4 @@ class DeliveryController {
   }
 }
 
-export default new DeliveryController();
+export default new CouriersManagmentController();
