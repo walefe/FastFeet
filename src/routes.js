@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import multer from 'multer';
+
+import multerConfig from './config/multer';
 
 import SessionsController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
@@ -6,13 +9,21 @@ import CouriersManagmentController from './app/controllers/CouriersManagmentCont
 import OrderController from './app/controllers/OrderController';
 import CouriesController from './app/controllers/CouriesController';
 import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
+import FileController from './app/controllers/FileController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.get('/delivery/:id/deliveries', CouriesController.index);
 routes.put('/delivery/orders/:id', CouriesController.update);
+
+routes.post(
+  '/files/:id/signature',
+  upload.single('file'),
+  FileController.store
+);
 
 routes.post('/delivery/:id/problems', DeliveryProblemsController.store);
 
@@ -27,6 +38,8 @@ routes.get('/couriers', CouriersManagmentController.index);
 routes.post('/couriers', CouriersManagmentController.store);
 routes.put('/couriers/:id', CouriersManagmentController.update);
 routes.delete('/couriers/:id', CouriersManagmentController.delete);
+
+routes.post('/files', upload.single('file'), FileController.store);
 
 routes.get('/orders', OrderController.index);
 routes.post('/orders', OrderController.store);
