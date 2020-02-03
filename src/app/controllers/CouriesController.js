@@ -4,6 +4,7 @@ import { isAfter, isBefore, parseISO, getHours } from 'date-fns';
 import Delivery from '../models/Delivery';
 import Order from '../models/Order';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 class CouriesController {
   async index(req, res) {
@@ -60,7 +61,7 @@ class CouriesController {
   async update(req, res) {
     const { id } = req.params;
     const { start_date, end_date } = req.query;
-    const { deliveryman_id } = req.body;
+    const { deliveryman_id, signature_id } = req.body;
 
     const delivery = await Delivery.findByPk(deliveryman_id);
 
@@ -68,7 +69,15 @@ class CouriesController {
       return res.status(400).json({ error: 'User is not a delivery person' });
     }
 
-    const order = await Order.findByPk(id);
+    const order = await Order.findByPk(id, {
+      include: [
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!order) {
       return res.status(400).json({ error: 'Order does note exist.' });
@@ -99,7 +108,12 @@ class CouriesController {
     }
 
     if (end_date) {
-      await order.update({ end_date });
+      const file = await File.findByPk(signature_id);
+
+      if (!file) {
+        return res.status(400).json({ error: 'Signature not exists' });
+      }
+      await order.update({ end_date, signature_id });
     }
 
     return res.json(order);
