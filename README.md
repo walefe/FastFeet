@@ -18,14 +18,33 @@
 
 The application is an app for a fictional carrier, FastFeet.
 
-### **About the tools**
+### **Technologies**
 
 - ⚡ **Express** - Fast, flexible and minimalist web framework for Node.js;
 - **Sucrase** + **Nodemon**;
 - 💖 **ESLint** + **Prettier** + **EditorConfig**;
 - 💾 **Sequelize** - SQL dialect ORM for Node.js;
+- 🔑 **Redis** — key-value data model
 - :closed_lock_with_key: **JWT** - Json Web Token;
 - ⌨️ **YUP** - is a JavaScript schema builder for value parsing and validation.
+- 📧 **Nodemailer** - Send e-mails with Node.JS
+
+## Dependencies
+
+- [Node.js](https://nodejs.org/en/) 12.14.0 ou >
+- [Yarn](https://yarnpkg.com/pt-BR/docs/install)
+- [Docker](https://www.docker.com/)
+
+## Prerequisites
+
+To run this server you will need two containers running on your machine.
+
+To do so, you will need to run the following commands:
+
+- `docker run --name fastfeet -e POSTGRES_PASSWORD=docker -p 5433:5432 -d postgres:11`;
+- `docker run --name redisfastfeet -p 6379:6379 -d -t redis:alpine`;
+
+_Remember: If you restart your machine, you will need to start again the server with `docker start <container_id>`._
 
 ## **Getting started**
 
