@@ -1,4 +1,5 @@
 import { Op } from 'sequelize';
+import * as Yup from 'yup';
 import { isAfter, isBefore, parseISO, getHours } from 'date-fns';
 
 import Delivery from '../models/Delivery';
@@ -59,6 +60,15 @@ class CouriesController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      deliveryman_id: Yup.number().required(),
+      signature_id: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation Fails' });
+    }
+
     const { id } = req.params;
     const { start_date, end_date } = req.query;
     const { deliveryman_id, signature_id } = req.body;

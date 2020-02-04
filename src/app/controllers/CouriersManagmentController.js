@@ -5,7 +5,9 @@ import File from '../models/File';
 
 class CouriersManagmentController {
   async index(req, res) {
-    const deliveries = await Delivery.findAll();
+    const deliveries = await Delivery.findAll({
+      attributes: ['id', 'name', 'email', 'avatar_id'],
+    });
 
     if (!deliveries) {
       return res.status(401).json({ error: 'Deliveries not found.' });
@@ -55,12 +57,15 @@ class CouriersManagmentController {
     }
 
     const { id } = req.params;
+    const { avatar_id } = req.body;
 
     const delivery = await Delivery.findByPk(id, {
+      attributes: ['id', 'name', 'email'],
       include: [
         {
           model: File,
-          attributes: ['id', 'name', 'path', 'url'],
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
         },
       ],
     });
@@ -69,14 +74,15 @@ class CouriersManagmentController {
       return res.status(401).json({ error: 'Delivery not exists.' });
     }
 
-    const { name, email } = await delivery.update(req.body);
+    const avatar = await File.findByPk(avatar_id);
 
-    return res.json({
-      id,
-      name,
-      email,
-      avatar_id: delivery.File,
-    });
+    if (!avatar) {
+      return res.status(401).json({ error: 'File not exists.' });
+    }
+
+    await delivery.update(req.body);
+
+    return res.json(delivery);
   }
 
   async delete(req, res) {
