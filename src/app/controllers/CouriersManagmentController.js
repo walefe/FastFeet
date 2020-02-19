@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Delivery from '../models/Delivery';
@@ -5,9 +6,24 @@ import File from '../models/File';
 
 class CouriersManagmentController {
   async index(req, res) {
-    const deliveries = await Delivery.findAll({
-      attributes: ['id', 'name', 'email', 'avatar_id'],
-    });
+    const { q } = req.query;
+
+    let deliveries;
+
+    if (q) {
+      deliveries = await Delivery.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `${q}%`,
+          },
+        },
+        attributes: ['id', 'name', 'email', 'avatar_id'],
+      });
+    } else {
+      deliveries = await Delivery.findAll({
+        attributes: ['id', 'name', 'email', 'avatar_id'],
+      });
+    }
 
     if (!deliveries) {
       return res.status(401).json({ error: 'Deliveries not found.' });
