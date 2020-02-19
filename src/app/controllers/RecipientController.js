@@ -1,8 +1,54 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+  async index(req, res) {
+    const { q } = req.query;
+
+    let recipients;
+
+    if (q) {
+      recipients = await Recipient.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `${q}%`,
+          },
+        },
+        attributes: [
+          'id',
+          'name',
+          'street',
+          'number',
+          'complement',
+          'state',
+          'city',
+          'cep',
+        ],
+      });
+    } else {
+      recipients = await Recipient.findAll({
+        attributes: [
+          'id',
+          'name',
+          'street',
+          'number',
+          'complement',
+          'state',
+          'city',
+          'cep',
+        ],
+      });
+    }
+
+    if (!recipients) {
+      return res.status(400).json({ error: 'Recipent does note exists.' });
+    }
+
+    return res.json(recipients);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

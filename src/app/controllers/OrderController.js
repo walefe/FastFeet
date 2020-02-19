@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Recipient from '../models/Recipient';
@@ -10,39 +11,80 @@ import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
-    const { page } = req.query;
+    const { page = 1, q } = req.query;
 
-    const orders = await Order.findAll({
-      attributes: ['id', 'product', 'start_date', 'end_date', 'canceled_at'],
-      limit: 10,
-      offset: (page - 1) * 10,
-      include: [
-        {
-          model: Recipient,
-          as: 'recipient',
-          attributes: [
-            'id',
-            'name',
-            'street',
-            'number',
-            'complement',
-            'state',
-            'city',
-            'cep',
-          ],
+    let orders;
+
+    if (q) {
+      orders = await Order.findAll({
+        where: {
+          product: {
+            [Op.iLike]: `${q}%`,
+          },
         },
-        {
-          model: Delivery,
-          as: 'delivery',
-          attributes: ['id', 'name', 'email'],
-        },
-        {
-          model: File,
-          as: 'signature',
-          attributes: ['name', 'path', 'url'],
-        },
-      ],
-    });
+        attributes: ['id', 'product', 'start_date', 'end_date', 'canceled_at'],
+        limit: 10,
+        offset: (page - 1) * 10,
+        include: [
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'complement',
+              'state',
+              'city',
+              'cep',
+            ],
+          },
+          {
+            model: Delivery,
+            as: 'delivery',
+            attributes: ['id', 'name', 'email'],
+          },
+          {
+            model: File,
+            as: 'signature',
+            attributes: ['name', 'path', 'url'],
+          },
+        ],
+      });
+    } else {
+      orders = await Order.findAll({
+        attributes: ['id', 'product', 'start_date', 'end_date', 'canceled_at'],
+        limit: 10,
+        offset: (page - 1) * 10,
+        include: [
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: [
+              'id',
+              'name',
+              'street',
+              'number',
+              'complement',
+              'state',
+              'city',
+              'cep',
+            ],
+          },
+          {
+            model: Delivery,
+            as: 'delivery',
+            attributes: ['id', 'name', 'email'],
+          },
+          {
+            model: File,
+            as: 'signature',
+            attributes: ['name', 'path', 'url'],
+          },
+        ],
+      });
+    }
 
     if (!orders) {
       return res.status(401).json({ error: 'Orders not found' });
