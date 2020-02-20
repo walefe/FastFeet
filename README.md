@@ -54,3 +54,7 @@ _Before you run this application you need to make sure the [server](https://gith
 2. Move to the appropriate directory: `cd FastFeet`.<br />
 3. Run `yarn` to install dependencies.<br />
 4. Run `yarn dev` to see the example app at `http://localhost:3333`.
+
+## If you are using Insomnia as an http client, import the file below.
+
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=FastFeet&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fwalefe%2FFastFeet%2Fmaster%2FInsomnia.json)
