@@ -7,7 +7,7 @@ import SessionsController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import CouriersManagmentController from './app/controllers/CouriersManagmentController';
 import OrderController from './app/controllers/OrderController';
-import CouriesController from './app/controllers/CouriesController';
+import OrderManagementController from './app/controllers/OrderManagementController';
 import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
 import FileController from './app/controllers/FileController';
 
@@ -16,8 +16,8 @@ import authMiddleware from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(multerConfig);
 
-routes.get('/delivery/:id/deliveries', CouriesController.index);
-routes.put('/delivery/orders/:id', CouriesController.update);
+routes.get('/delivery/:id/deliveries', OrderManagementController.index);
+routes.put('/delivery/orders/:id', OrderManagementController.update);
 
 routes.post(
   '/files/:id/signature',
