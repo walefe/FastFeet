@@ -7,7 +7,7 @@ import Order from '../models/Order';
 import Recipient from '../models/Recipient';
 import File from '../models/File';
 
-class CouriesController {
+class OrderManagementController {
   async index(req, res) {
     const { id } = req.params;
     const { filter, page = 1 } = req.query;
@@ -130,4 +130,4 @@ class CouriesController {
   }
 }
 
-export default new CouriesController();
+export default new OrderManagementController();
