@@ -28,6 +28,7 @@ The application is an app for a fictional carrier, FastFeet.
 - :closed_lock_with_key: **JWT** - Json Web Token;
 - ⌨️ **YUP** - is a JavaScript schema builder for value parsing and validation.
 - 📧 **Nodemailer** - Send e-mails with Node.JS
+- 🔺 **Sentry** - cross-platform application monitoring
 
 ## Dependencies
 
